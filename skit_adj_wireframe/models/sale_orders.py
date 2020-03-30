@@ -109,7 +109,8 @@ class SkitSaleOrderLine(models.Model):
                 return False
             else:
                 return True
-            
+
+              
 class SaleReport(models.Model):
     _inherit = "sale.report"
 
