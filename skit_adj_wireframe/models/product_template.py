@@ -44,9 +44,9 @@ class ProductTemplate(models.Model):
     carton_w_cm = fields.Float("Carton W (cm)")
     carton_d_cm = fields.Float("Carton D (cm)")
     carton_h_cm = fields.Float("Carton H (cm)")
-    carton_w_in = fields.Float("Carton W (in)")
-    carton_d_in = fields.Float("Carton D (in)")
-    carton_h_in = fields.Float("Carton H (in)")
+    carton_w_in = fields.Float("Item W (in)")
+    carton_d_in = fields.Float("Item D (in)")
+    carton_h_in = fields.Float("Item H (in)")
     cbm = fields.Float("CBM", help="Master Carton Cube")
     gtin = fields.Char("GTIN")
     remark = fields.Text(string='Remarks', help="Notes/Remark")
@@ -79,14 +79,14 @@ class ProductTemplate(models.Model):
         compute='_compute_list_price',
         readonly=False, store=True,
         help="Compute price based on Cost and Gross Margin values")
-    
+
     @api.onchange('carton_w_cm', 'carton_d_cm', 'carton_h_cm')
     def _onchange_cu_ft(self):
         carton_cm = ((self.carton_d_cm * self.carton_h_cm * self.carton_w_cm)/1000000)
         carton_d_in = (self.carton_d_cm / 2.54)
         carton_h_in = (self.carton_h_cm / 2.54)
         carton_w_in = (self.carton_w_cm / 2.54)
-        cubic_feet  = ((self.carton_d_in * self.carton_h_in * self.carton_w_in)/1728) 
+        cubic_feet  = ((self.carton_d_in * self.carton_h_in * self.carton_w_in)/1728)
         self.update({'cbm': carton_cm,
                      'carton_d_in': carton_d_in,
                      'carton_h_in': carton_h_in,
@@ -185,7 +185,7 @@ class SkitProductProduct(models.Model):
         carton_d_in = (self.carton_d_cm / 2.54)
         carton_h_in = (self.carton_h_cm / 2.54)
         carton_w_in = (self.carton_w_cm / 2.54)
-        cubic_feet  = ((self.carton_d_in * self.carton_h_in * self.carton_w_in)/1728) 
+        cubic_feet  = ((self.carton_d_in * self.carton_h_in * self.carton_w_in)/1728)
         self.update({'cbm': carton_cm,
                      'carton_d_in': carton_d_in,
                      'carton_h_in': carton_h_in,
@@ -202,7 +202,7 @@ class SkitProductProduct(models.Model):
                      'carton_h_cm': carton_h_cm,
                      'carton_w_cm': carton_w_cm,
                      'cu_ft': cubic_feet})
-        
+
     @api.onchange('sell_price')
     def onchange_sellprice(self):
         cost_price = self.standard_price
