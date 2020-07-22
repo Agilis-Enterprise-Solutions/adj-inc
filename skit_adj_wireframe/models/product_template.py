@@ -80,12 +80,12 @@ class ProductTemplate(models.Model):
         readonly=False, store=True,
         help="Compute price based on Cost and Gross Margin values")
 
-    @api.onchange('carton_w_cm', 'carton_d_cm', 'carton_h_cm')
+    @api.onchange('item_w_cm', 'item_d_cm', 'item_h_cm')
     def _onchange_cu_ft(self):
-        carton_cm = ((self.carton_d_cm * self.carton_h_cm * self.carton_w_cm)/1000000)
-        carton_d_in = (self.carton_d_cm / 2.54)
-        carton_h_in = (self.carton_h_cm / 2.54)
-        carton_w_in = (self.carton_w_cm / 2.54)
+        carton_cm = ((self.item_d_cm * self.item_h_cm * self.item_w_cm)/1000000)
+        carton_d_in = (self.item_d_cm / 2.54)
+        carton_h_in = (self.item_h_cm / 2.54)
+        carton_w_in = (self.item_w_cm / 2.54)
         cubic_feet  = ((self.carton_d_in * self.carton_h_in * self.carton_w_in)/1728)
         self.update({'cbm': carton_cm,
                      'carton_d_in': carton_d_in,
@@ -96,13 +96,13 @@ class ProductTemplate(models.Model):
     @api.onchange('carton_w_in', 'carton_d_in', 'carton_h_in')
     def _onchange_cu_ft_inches(self):
         carton_cm = (self.carton_d_in * self.carton_h_in * self.carton_w_in)
-        carton_d_cm = (self.carton_d_in *  2.54)
-        carton_h_cm = (self.carton_h_in *  2.54)
-        carton_w_cm = (self.carton_w_in *  2.54)
+        item_d_cm = (self.carton_d_in *  2.54)
+        item_h_cm = (self.carton_h_in *  2.54)
+        item_w_cm = (self.carton_w_in *  2.54)
         cubic_feet = (carton_cm / 1728)
-        self.update({'carton_d_cm': carton_d_cm,
-                     'carton_h_cm': carton_h_cm,
-                     'carton_w_cm': carton_w_cm,
+        self.update({'item_d_cm': item_d_cm,
+                     'item_h_cm': item_h_cm,
+                     'item_w_cm': item_w_cm,
                      'cu_ft': cubic_feet})
 
     @api.onchange('sell_price')
@@ -179,12 +179,12 @@ class SkitProductProduct(models.Model):
     sale_order_line_ids = fields.One2many('sale.order.line', 'product_id',
                                           'Sales Order')
 
-    @api.onchange('carton_w_cm', 'carton_d_cm', 'carton_h_cm')
+    @api.onchange('item_w_cm', 'item_d_cm', 'item_h_cm')
     def _onchange_cu_ft(self):
-        carton_cm = ((self.carton_d_cm * self.carton_h_cm * self.carton_w_cm)/1000000)
-        carton_d_in = (self.carton_d_cm / 2.54)
-        carton_h_in = (self.carton_h_cm / 2.54)
-        carton_w_in = (self.carton_w_cm / 2.54)
+        carton_cm = ((self.item_d_cm * self.item_h_cm * self.item_w_cm)/1000000)
+        carton_d_in = (self.item_d_cm / 2.54)
+        carton_h_in = (self.item_h_cm / 2.54)
+        carton_w_in = (self.item_w_cm / 2.54)
         cubic_feet  = ((self.carton_d_in * self.carton_h_in * self.carton_w_in)/1728)
         self.update({'cbm': carton_cm,
                      'carton_d_in': carton_d_in,
@@ -194,13 +194,13 @@ class SkitProductProduct(models.Model):
     @api.onchange('carton_w_in', 'carton_d_in', 'carton_h_in')
     def _onchange_cu_ft_inches(self):
         carton_cm = (self.carton_d_in * self.carton_h_in * self.carton_w_in)
-        carton_d_cm = (self.carton_d_in *  2.54)
-        carton_h_cm = (self.carton_h_in * 2.54)
-        carton_w_cm = (self.carton_w_in * 2.54)
+        item_d_cm = (self.carton_d_in *  2.54)
+        item_h_cm = (self.carton_h_in * 2.54)
+        item_w_cm = (self.carton_w_in * 2.54)
         cubic_feet = (carton_cm / 1728)
-        self.update({'carton_d_cm': carton_d_cm,
-                     'carton_h_cm': carton_h_cm,
-                     'carton_w_cm': carton_w_cm,
+        self.update({'item_d_cm': item_d_cm,
+                     'item_h_cm': item_h_cm,
+                     'item_w_cm': item_w_cm,
                      'cu_ft': cubic_feet})
 
     @api.onchange('sell_price')
